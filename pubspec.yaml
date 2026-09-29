@@ -1,0 +1,20 @@
+name: gospel_ads
+description: "Shared full-screen gospel ads with a rising show chance."
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.8.0
+  flutter: ">=3.16.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  shared_preferences: ^2.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
