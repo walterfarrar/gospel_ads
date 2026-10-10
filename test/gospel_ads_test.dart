@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gospel_ads/gospel_ads.dart';
+import 'package:gospel_ads/src/catalog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -75,5 +76,29 @@ void main() {
 
     expect(GospelAds.chanceForTest, 15);
     expect(prefs.getDouble('gospel_ad_chance'), 15);
+  });
+
+  group('catalog', () {
+    test('every ad stands on its own', () {
+      expect(gospelAds, isNotEmpty);
+      for (final ad in gospelAds) {
+        expect(ad.lines.length, inInclusiveRange(2, 5),
+            reason: 'fits the fade window: ${ad.lines.first}');
+        for (final line in ad.lines) {
+          expect(line.trim(), isNotEmpty);
+        }
+        expect(ad.lines.last.startsWith('—'), isFalse,
+            reason: 'last line is the takeaway, not a citation: '
+                '${ad.lines.first}');
+      }
+    });
+
+    test('has no duplicate ads', () {
+      final seen = <String>{};
+      for (final ad in gospelAds) {
+        expect(seen.add(ad.lines.join('\n')), isTrue,
+            reason: 'duplicate: ${ad.lines.first}');
+      }
+    });
   });
 }
